@@ -3,22 +3,27 @@ const mainRouter = require('./routes/index');
 // var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 // const cors = require('cors');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 var app = express();
 const port = process.env.PORT || 3001;
 
 // var verifyJWT = require("./middlewares/auth")
+const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}` +
+    `@${process.env.DB_CLUSTER_URL}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-// mongoose.connect(process.env.MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// }).then(() => {
-//     console.log('Connected to MongoDB');
-// }).catch(err => {
-//     console.log('Error connecting to MongoDB: ', err.message);
-// });
+// try to connect to the database
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.log('Error connecting to MongoDB: ', err.message);
+});
+
+// console.log(mongoURI)
 
 // Enable Cors
 // app.use(cors());
